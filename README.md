@@ -11,9 +11,9 @@ com as informações necessárias.
 
 1. Em seu computador, clone este repositório e execute o seguinte comando na raiz do projeto:
 
-   '''bash
+   ```bash
    cmake .
-   '''
+   ```
 
    Isso fará com que o arquivo makefile seja criado automaticamente
    usando as configurações presentes em CMakeLists.txt e assim você
@@ -22,6 +22,6 @@ com as informações necessárias.
 2. Compile seus programas e os execute, já deixei pronto alguns
    arquivos bash para que facilite a chamada no terminal ex.:
 
-   '''bash
+   ```bash
    ./alt_execFace_classify.sh
-   '''
+   ```
