@@ -12,7 +12,7 @@ com as informações necessárias.
 1. Em seu computador, clone este repositório e execute o seguinte comando na raiz do projeto:
 
    ```bash
-   cmake .
+   $ cmake .
    ```
 
    Isso fará com que o arquivo makefile seja criado automaticamente
@@ -24,5 +24,5 @@ com as informações necessárias.
    Ex.:
 
    ```bash
-   ./alt_execFace_classify.sh
+   $ ./alt_execFace_classify.sh
    ```
