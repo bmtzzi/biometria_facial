@@ -20,7 +20,8 @@ com as informações necessárias.
    poderá compilar os programas com muito mais facilidade.
 
 2. Compile seus programas e os execute, já deixei pronto alguns
-   arquivos bash para que facilite a chamada no terminal ex.:
+   arquivos bash para que facilite a chamada no terminal.
+   Ex.:
 
    ```bash
    ./alt_execFace_classify.sh
