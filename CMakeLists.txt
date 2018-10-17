@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 2.8)
+project( biometriaFacial )
+find_package( OpenCV REQUIRED )
+add_executable( biometriaFacial biometriaFacial.cpp )
+target_link_libraries( biometriaFacial ${OpenCV_LIBS} )
