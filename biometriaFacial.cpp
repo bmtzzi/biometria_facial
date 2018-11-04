@@ -40,13 +40,13 @@ static void read_csv(const string& nomeArquivo, vector<Mat>& imagens, vector<int
 }
 
 void encontrarEMostrarFaces(Mat& frame, const string nomeJanela, CascadeClassifier& detector, Ptr<LBPHFaceRecognizer>& classificador, char *nomes[], int* contagem, Mat& destravado, Mat&destravadoAlpha, Mat& travado, Mat& travadoAlpha){
-    int i, classificacao, pos_x, pos_y;
+    int i, classificacao, pos_x, pos_y, novo_int;
     double confianca;
     Mat cinza, face, face_reduzida;
     Rect faceAtual;
     string texto;
     vector<Rect_<int> > faces;
-
+if(frame.cols == 0)cout << "frame ta vazio" << endl;
     // converte o frame para cinza
     cvtColor(frame, cinza, CV_BGR2GRAY);
 
@@ -70,7 +70,14 @@ void encontrarEMostrarFaces(Mat& frame, const string nomeJanela, CascadeClassifi
         classificador->predict(face, classificacao, confianca);
 
         // se a confianca for menor do que 5000, entao desenhamos suas informacoes no frame
-        if(confianca < 5000){
+        if(confianca < 8000){
+            // mudamos o tamanho do retangulo da face para corresponder a posicao da face de treino
+            novo_int = (int)(faceAtual.width * 0.14);
+            faceAtual.x += novo_int;
+            faceAtual.width -= 2 * novo_int;
+            novo_int = (int)(faceAtual.height * 0.17);
+            faceAtual.y += novo_int;
+            faceAtual.height -= novo_int;
             // desenhamos um retangulo verde ao redor da face
             rectangle(frame, faceAtual, CV_RGB(0, 255, 0), 1);
 
@@ -100,11 +107,9 @@ void encontrarEMostrarFaces(Mat& frame, const string nomeJanela, CascadeClassifi
                 travado.copyTo(frame(Rect(0, 0, travado.cols, travado.rows)), travadoAlpha); // senao, o mantem travado
             }
         }
-    }
-
-    // se nao foi detectada nenhuma face neste frame, entao reseta o contador
-    if(i == 0){
-        *contagem = 0;
+        else{
+            *contagem = 0;
+        }
     }
 
     // mostra o frame ao usuario
