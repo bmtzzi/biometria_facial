@@ -39,7 +39,7 @@ static void read_csv(const string& nomeArquivo, vector<Mat>& imagens, vector<int
     }
 }
 
-void encontrarEMostrarFaces(Mat& frame, const string nomeJanela, CascadeClassifier& detector, Ptr<FisherFaceRecognizer>& classificador, char *nomes[], int* contagem, Mat& destravado, Mat&destravadoAlpha, Mat& travado, Mat& travadoAlpha){
+void encontrarEMostrarFaces(Mat& frame, const string nomeJanela, CascadeClassifier& detector, Ptr<LBPHFaceRecognizer>& classificador, char *nomes[], int* contagem, Mat& destravado, Mat&destravadoAlpha, Mat& travado, Mat& travadoAlpha){
     int i, classificacao, pos_x, pos_y;
     double confianca;
     Mat cinza, face, face_reduzida;
@@ -62,12 +62,12 @@ void encontrarEMostrarFaces(Mat& frame, const string nomeJanela, CascadeClassifi
         face = cinza(faceAtual);
 
         // colocamos a face no mesmo tamanho que as imagens de treino
-        cv::resize(face, face_reduzida, Size(im_width, im_height), 1.0, 1.0, INTER_CUBIC);
+        //cv::resize(face, face_reduzida, Size(im_width, im_height), 1.0, 1.0, INTER_CUBIC);
 
         // classificamos a face
         classificacao = -1;
         confianca = 0.0;
-        classificador->predict(face_reduzida, classificacao, confianca);
+        classificador->predict(face, classificacao, confianca);
 
         // se a confianca for menor do que 5000, entao desenhamos suas informacoes no frame
         if(confianca < 5000){
@@ -169,11 +169,11 @@ int main(int argc, const char *argv[]) {
     im_height = imagens[0].rows;
 
     // sera usado um Fisher face recognizer
-    Ptr<FisherFaceRecognizer> classificador = FisherFaceRecognizer::create();
+    //Ptr<FisherFaceRecognizer> classificador = FisherFaceRecognizer::create();
     // tambem podemos usar o Eigen face recognizer, mas nao mostrou-se tao acertivo quanto o Fisher
     //Ptr<EigenFaceRecognizer> classificador = EigenFaceRecognizer::create();
     // tambem podemos usar o Local ninary patterns histogram
-    //Ptr<LBPHFaceRecognizer> classificador = LBPHFaceRecognizer::create();
+    Ptr<LBPHFaceRecognizer> classificador = LBPHFaceRecognizer::create();
 
     // treinamos o classificador com as imagens de treino
     classificador->train(imagens, classes);
